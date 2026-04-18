@@ -62,8 +62,15 @@ const handleLogout = () => {
       </div>
     </div>
 
-    <div v-else class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+    <div v-else class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 flex flex-col items-center gap-4">
       <p class="text-yellow-800">No user data available. Please log in.</p>
+      <RouterLink
+        to="/auth/login"
+        class="w-full text-center rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-white transition hover:bg-indigo-700"
+      >
+        Login
+      </RouterLink>
     </div>
   </AuthLayout>
 </template>
+    
