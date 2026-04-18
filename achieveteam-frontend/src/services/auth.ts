@@ -45,7 +45,7 @@ export type LoginResponse = {
 
 export async function login(data: LoginPayload): Promise<LoginResponse> {
   try {
-    const response = await http.post<LoginResponse>('/auth/login', data)
+    const response = await http.post<LoginResponse>('/login', data)
     if (response.data.token) {
       localStorage.setItem('authToken', response.data.token)
     }
