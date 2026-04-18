@@ -55,6 +55,14 @@ export async function login(data: LoginPayload): Promise<LoginResponse> {
   }
 }
 
+export async function getUser(): Promise<User> {
+  try {
+    const response = await http.get<User>('/me')
+    return response.data
+  } catch (error) {
+    throw handleApiError(error)
+  }
+}
 
 export function logout(): void {
   localStorage.removeItem('authToken')
