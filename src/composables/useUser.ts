@@ -3,7 +3,6 @@ import { queryKeys } from '../lib/queryKeys'
 import { 
   type LoginPayload, 
   type LoginResponse,
-  type User,
 
   login,
   logout,
