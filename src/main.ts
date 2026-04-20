@@ -1,4 +1,4 @@
-import './assets/main.css'
+import '@/assets/main.css'
 import { VueQueryPlugin } from '@tanstack/vue-query'
 
 import { createApp } from 'vue'
