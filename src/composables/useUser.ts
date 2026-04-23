@@ -1,5 +1,6 @@
 import {  useMutation, useQueryClient, useQuery } from '@tanstack/vue-query'
 import { queryKeys } from '../lib/queryKeys'
+import { getAuthToken } from '../lib/auth'
 import { 
   type LoginPayload, 
   type LoginResponse,
@@ -15,7 +16,7 @@ export function useUser() {
   const userQuery = useQuery({
     queryKey: queryKeys.auth.user,
     queryFn: getCurrentUser,
-    enabled: !!localStorage.getItem('authToken'), // Only fetch if token exists
+    enabled: !!getAuthToken(), // Only fetch if token exists
   })
 
   const loginMutation = useMutation({

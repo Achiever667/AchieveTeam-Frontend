@@ -1,5 +1,6 @@
 import http from './http'
 import { handleApiError } from '../lib/apiError'
+import { setAuthToken, clearAuthToken } from '../lib/auth'
 import type { IUser } from '../types/index'
 
 export interface User extends IUser {
@@ -39,15 +40,16 @@ export interface LoginPayload {
 }
 
 export type LoginResponse = {
-  token: string
+  accessToken: string
   user: User
 }
 
 export async function login(data: LoginPayload): Promise<LoginResponse> {
   try {
     const response = await http.post<LoginResponse>('/login', data)
-    if (response.data.token) {
-      localStorage.setItem('authToken', response.data.token)
+    const token = response.data.accessToken || (response.data as any).token
+    if (token) {
+      setAuthToken(token)
     }
     return response.data
   } catch (error) {
@@ -57,7 +59,7 @@ export async function login(data: LoginPayload): Promise<LoginResponse> {
 
 export async function getCurrentUser(): Promise<User> {
   try {
-    const response = await http.get<User>('/me')
+    const response = await http.get<User>('/profile')
     return response.data
   } catch (error) {
     throw handleApiError(error)
@@ -65,7 +67,7 @@ export async function getCurrentUser(): Promise<User> {
 }
 
 export function logout(): void {
-  localStorage.removeItem('authToken')
+  clearAuthToken()
 }
 
 
