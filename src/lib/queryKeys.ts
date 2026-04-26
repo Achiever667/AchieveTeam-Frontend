@@ -8,4 +8,8 @@ export const queryKeys = {
     detail: (id: string) => ['users', id] as const,
   },
 
+  loans: {
+    all: ['loans'] as const,
+  },
+
 }

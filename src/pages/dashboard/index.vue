@@ -2,6 +2,7 @@
 <script setup lang="ts">
 import { useUser } from '../../composables/useUser'
 import AuthLayout from '../../components/layouts/AuthLayout.vue'
+import { RouterLink } from 'vue-router'
 
 const { user, isLoading, error, logout } = useUser()
 
@@ -23,7 +24,18 @@ const handleLogout = () => {
     </div>
 
     <div v-else-if="user" class="bg-white rounded-[32px] border border-slate-200 p-8 shadow-[0_24px_70px_rgba(15,23,42,0.08)]">
-      <h2 class="text-2xl font-semibold text-[#4C1D95] mb-6">User Details</h2>
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-6">
+        <div>
+          <h2 class="text-2xl font-semibold text-[#4C1D95]">User Details</h2>
+          <p class="text-sm text-slate-500">Manage your account and open loan details.</p>
+        </div>
+        <RouterLink
+          to="/loans"
+          class="inline-flex items-center justify-center rounded-full bg-[#6B21A8] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#581C87]"
+        >
+          View loans
+        </RouterLink>
+      </div>
 
       <div class="space-y-4">
         <div class="flex items-center justify-between py-3 border-b border-slate-100">
