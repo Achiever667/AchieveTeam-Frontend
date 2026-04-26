@@ -6,6 +6,9 @@
           <h2 class="text-2xl font-semibold text-slate-900">Your loans</h2>
           <p class="mt-2 text-sm text-slate-500">See loan information, status, and repayment details in one place.</p>
         </div>
+        <Button @click="$router.push('/loans/apply')">
+          Apply for Loan
+        </Button>
       </div>
 
       <div v-if="isLoading" class="flex justify-center py-10">
@@ -32,6 +35,7 @@
 import AuthLayout from '../../components/layouts/AuthLayout.vue'
 import { useLoan } from '../../composables/useLoan'
 import LoanCard from '../../components/ui/loan/LoanCard.vue'
+import Button from '../../components/ui/button/Button.vue'
 
 const { loans, isLoading, error } = useLoan()
 </script>

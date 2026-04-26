@@ -14,6 +14,13 @@ export interface Loan {
   createdAt?: string
 }
 
+export interface LoanApplication {
+  amount: number
+  termMonths: number
+  description?: string
+  currency?: string
+}
+
 export async function getLoans(): Promise<Loan[]> {
   try {
     const response = await http.get<Loan[]>('/loans')
@@ -26,6 +33,15 @@ export async function getLoans(): Promise<Loan[]> {
 export async function getLoanById(id: string | number): Promise<Loan> {
   try {
     const response = await http.get<Loan>(`/loans/${id}`)
+    return response.data
+  } catch (error) {
+    throw handleApiError(error)
+  }
+}
+
+export async function applyForLoan(application: LoanApplication): Promise<Loan> {
+  try {
+    const response = await http.post<Loan>('/loans/apply', application)
     return response.data
   } catch (error) {
     throw handleApiError(error)

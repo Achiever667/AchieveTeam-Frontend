@@ -3,9 +3,9 @@ import { computed, ref, watch, type Component } from 'vue'
 import { Eye, EyeOff } from 'lucide-vue-next'
 
 interface Props {
-  modelValue?: string
+  modelValue?: string | number
   label?: string
-  type?: 'text' | 'email' | 'password'
+  type?: 'text' | 'email' | 'password' | 'number'
   placeholder?: string
   required?: boolean
   error?: string
@@ -19,16 +19,16 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: string): void
+  (e: 'update:modelValue', value: string | number): void
 }>()
 
-const inputValue = ref<string>(props.modelValue)
+const inputValue = ref<string | number>(props.modelValue ?? '')
 const showPassword = ref(false)
 
 watch(
   () => props.modelValue,
   (val) => {
-    inputValue.value = val ?? ''
+    inputValue.value = val ?? (props.type === 'number' ? 0 : '')
   }
 )
 
@@ -50,7 +50,7 @@ const EyeIcon = computed(() => (showPassword.value ? EyeOff : Eye))
 const passwordRules = computed(() => {
   if (!isPassword.value) return []
 
-  const value = inputValue.value ?? ''
+  const value: string = String(inputValue.value ?? '')
 
   return [
     { label: 'At least 8 characters', valid: value.length >= 8 },
@@ -77,7 +77,7 @@ const passwordRules = computed(() => {
 
       <input
         v-model="inputValue"
-        :type="inputType"
+        :type="props.type === 'number' ? 'number' : inputType"
         :placeholder="placeholder"
         class="w-full border rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-primary-500"
         :class="[
